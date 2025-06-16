@@ -92,7 +92,7 @@ namespace AY
 		char c('s');
 		bool b(true);*/
 
-		vector<int> v;
+		/*vector<int> v;
 		v.push_back(1);
 		v.push_back(2);
 		v.push_back(2);
@@ -102,7 +102,7 @@ namespace AY
 		
 		vector<int> v1 = v;
 		vector<int> v2 = { 1, 2, 3, 4, 5, 6 };
-		Print(v2);
+		Print(v2);*/
 
 		//Print(v1);
 
@@ -112,13 +112,52 @@ namespace AY
 		/*v.resize(3);
 		Print(v);*/
 	}
+
+	void test4()
+	{
+		/*vector<int> v1;
+		v1.push_back(1);
+		v1.push_back(2);
+		v1.push_back(2);
+		v1.push_back(4);
+		v1.push_back(5);
+		v1.push_back(6);*/
+
+		/*vector<int> v2(v1.begin() + 1, v1.end() - 1);
+		Print(v2);*/
+
+		/*string str("hello world");
+		vector<int> v(str.begin(), str.end());
+		Print(v);*/
+
+		/*vector<int> v1(10, 2);
+		Print(v1);*/
+
+		/*vector<size_t> v2(10, 4);
+		Print(v2);*/
+
+		/*string str("hello world");
+		vector<int> v(str.begin(), str.end());
+		vector<int> v2 = v;
+		Print(v2);*/
+
+		vector<string> v;
+		v.push_back("1234567");
+		v.push_back("2345678");
+		v.push_back("3456789");
+		v.push_back("4567890");
+		v.push_back("5678900");
+
+		Print(v);
+	}
 }
 
 int main()
 {
 	//AY::test1();
 	//AY::test2();
-	AY::test3();
+	//AY::test3();
+	AY::test4();
 
 	return 0;
 }

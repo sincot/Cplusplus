@@ -3,6 +3,7 @@
 #include <iostream>
 #include <assert.h>
 #include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -46,7 +47,11 @@ namespace AY
 				// 检验数组的数据是否为0
 				if (m_start != NULL)
 				{
-					memcpy(tmp, m_start, sizeof(T) * old_size);
+					//memcpy(tmp, m_start, sizeof(T) * old_size);
+					for (size_t i = 0; i < old_size; i++)
+					{
+						tmp[i] = m_start[i];
+					}
 					// 释放旧空间
 					delete[] m_start;
 				}
@@ -197,7 +202,7 @@ namespace AY
 		}
 
 		// resize 函数
-		void resize(size_t n, T val = T())
+		void resize(size_t n, const T& val = T())
 		{
 			// n 大于 有效数据个数 —— 就扩容
 			if (n > size())
@@ -217,7 +222,7 @@ namespace AY
 		}
 
 		// swap 函数
-		void swap(vector& x)
+		void swap(vector<T>& x)
 		{
 			std::swap(m_start, x.m_start);
 			std::swap(m_finish, x.m_finish);
@@ -246,8 +251,45 @@ namespace AY
 				push_back(e);
 			}
 		}
+        
+		// 支持迭代器区间初始化
+		/*vector(iterator begin, iterator end)
+		{
+			// 把迭代器区间的值插入到容器中
+			while (begin != end)
+			{
+				push_back(*begin);
+				++begin;
+			}
+		}*/
 
-	private:
+		// 支持迭代器区间初始化
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			// 把迭代器区间的值插入到容器中
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+
+		// 支持 n 个 val 值初始化
+		vector(size_t n, const T& val = T())
+		{
+			resize(n, val);
+		}
+
+		// 赋值重载函数
+		vector<T>& operator=(const vector<T>& x)
+		{
+			swap(x);
+
+			return *this;
+		}
+
+    private:
 		iterator m_start = nullptr;
 		iterator m_finish = nullptr;
 		iterator m_end_of_storage = nullptr;

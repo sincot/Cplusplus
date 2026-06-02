@@ -28,6 +28,14 @@ namespace XAY
 			, s_next(nullptr)
 		{
 		}
+
+		template <class... Args>
+		list_node(Args&&... args)
+			: s_data(args...)
+			, s_prev(nullptr)
+			, s_next(nullptr)
+		{
+		}
 	};
 
 	template <class T, class Ref, class Ptr>
@@ -221,45 +229,6 @@ namespace XAY
 			m_head = nullptr;
 		}
 
-		//// insert 函数（左值引用）
-		//iterator insert(iterator pos, const T& val)
-		//{
-		//	// 创建新节点
-		//	Node* newnode = new Node(val);
-		//	Node* cur = pos.s_node;
-		//	Node* prev = cur->s_prev;
-
-		//	// prev newnode cur
-		//	prev->s_next = newnode;
-		//	newnode->s_prev = prev;
-		//	newnode->s_next = cur;
-		//	cur->s_prev = newnode;
-
-		//	// 返回指向第一个插入元素的迭代器 --- nenwode
-		//	return newnode;
-		//	// return iterator(newnode);
-		//}
-
-		// insert 函数（右值引用） —— move
-		//template <class X>
-		//iterator insert(iterator pos, X&& val)
-		//{
-		//	// 创建新节点
-		//	Node* newnode = new Node(move(val));
-		//	Node* cur = pos.s_node;
-		//	Node* prev = cur->s_prev;
-
-		//	// prev newnode cur
-		//	prev->s_next = newnode;
-		//	newnode->s_prev = prev;
-		//	newnode->s_next = cur;
-		//	cur->s_prev = newnode;
-
-		//	// 返回指向第一个插入元素的迭代器 --- nenwode
-		//	return newnode;
-		//	// return iterator(newnode);
-		//}
-
 		// insert 函数（右值引用） —— 完美转发
 		template <class X>
 		iterator insert(iterator pos, X&& val)
@@ -302,24 +271,36 @@ namespace XAY
 			insert(begin(), val);
 		}
 
-		//// push_back 函数 --- 尾插（左值引用）
-		//void push_back(const T& val)
-		//{
-		//	insert(end(), val);
-		//}
-
-		// push_back 函数 --- 尾插（右值引用） —— move
-		/*template <class X>
-		void push_back(X&& val)
-		{
-			insert(end(), move(val));
-		}*/
-
 		// push_back 函数 --- 尾插（右值引用） —— 完美转发
 		template <class X>
 		void push_back(X&& val)
 		{
 			insert(end(), forward<X>(val));
+		}
+
+		template <class... Args>
+		iterator emplace(iterator pos, Args&&... args)
+		{
+			// 创建新节点
+			Node* newnode = new Node(args...);
+			Node* cur = pos.s_node;
+			Node* prev = cur->s_prev;
+
+			// prev newnode cur
+			prev->s_next = newnode;
+			newnode->s_prev = prev;
+			newnode->s_next = cur;
+			cur->s_prev = newnode;
+
+			// 返回指向第一个插入元素的迭代器 --- nenwode
+			return newnode;
+			// return iterator(newnode);
+		}
+
+		template <class ...Args>
+		void emplace_back(Args&&...args)
+		{
+			emplace(end(), args...);
 		}
 
 		// pop_front 函数 --- 头删

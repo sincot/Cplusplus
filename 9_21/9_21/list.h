@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace AY
+namespace XAY
 {
 	template<class T>
 	struct list_node
